@@ -1,2 +1,3 @@
-# Empirical-Analysis-of-Determinants-of-Economic-Growth-in-Australia
-An empirical study investigating determinants of economic growth in Australia, analysing factors such as GDP, investment, inflation, human capital, demographics and trade openness.
+# Empirical Analysis of Determinants of Economic Growth in Australia
+
+This project investigates the determinants of economic growth in Australia from 1995 to 2019, employing an autoregressive distributed lag (ARDL) model. Factors examined include GDP, investment, inflation, human capital, demographics, and trade openness. 
