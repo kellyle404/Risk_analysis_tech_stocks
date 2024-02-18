@@ -61,7 +61,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
 :root {
   --main-font: 'Roboto', sans-serif;
-  --code-font: 'JetBrains Mono Medium', monospace;
+  --code-font: 'JetBrains Mono', monospace;
 }
 
 /* -------------------- HEADERS -------------------- */
@@ -145,7 +145,7 @@ code {
 
 .jp-RenderedText, .jp-OutputArea-output, .cm-editor.cm-s-jupyter, .jp-RenderedText.jp-OutputArea-output, .jp-OutputPrompt.jp-OutputArea-prompt, .jp-Cell-outputWrapper, .jp-OutputArea-child {
   font-family: var(--code-font);
-  font-weight: medium !important;
+  font-weight: 400px !important;
   font-size: 13px !important;
   line-height: 18px !important;
 }
@@ -9359,7 +9359,7 @@ Loss will not exceed:
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>The Monte Carlo simulation approach estimates Value at Risk (VaR) by simulating future stock prices through a loop that generates random shocks and calculates drift for each day based on historical returns. This method, distinct from Historical Simulation, uses a lognormal distribution to generate risk factor scenarios. It accurately prices both linear and non-linear positions, providing a full distribution of potential portfolio gains and losses.</p>
-<p>Pros include flexibility in parameter specification, capturing non-normalities, and accounting for all types of complex positions. However, it assumes a lognormal distribution, relies on appropriate scenario generation, and demands computational resources. Its precision is contingent on parameter choices and underlying assumptions.</p>
+<p>This approach offers flexibility in specifying parameters, effectively capturing non-normalities, and accommodating diverse complex positions. However, it relies on assuming a lognormal distribution, necessitates appropriate scenario generation, and demands substantial computational resources.</p>
 </div>
 </div>
 </div>
