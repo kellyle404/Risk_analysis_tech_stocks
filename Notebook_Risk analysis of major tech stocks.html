@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Risk analysis of major tech stocks</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Notebook_Risk analysis of major tech stocks</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -56,20 +56,23 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
   </style>
 <style type="text/css">
     /* Fonts */
-@import url('http://fonts.googleapis.com/css?family=Inter');
-@import url('http://fonts.googleapis.com/css?family=DM+Mono');
+@import url('http://fonts.googleapis.com/css?family=JetBrains+Mono');
+@import url('http://fonts.googleapis.com/css?family=Noto+Sans+Display');
+@import url('http://fonts.googleapis.com/css?family=Figtree');
 
 :root {
-  --main-font: 'Product Sans', sans-serif;
+  --main-font: 'Figtree', sans-serif;
+  --title-font: 'Figtree', sans-serif;
   --code-font: 'JetBrains Mono Medium', monospace;
 }
 
 /* -------------------- HEADERS -------------------- */
 
 h1 {
-  font-family: var(--main-font);
-  font-weight: bold !important;
+  font-family: var(--title-font);
   font-size: 60px !important;
+  font-optical-sizing: auto;
+  font-weight: 1000 !important;
   line-height: 30px;
   margin-top: 3%;
   padding-bottom: 5px;
@@ -106,6 +109,7 @@ h3 {
 ul, ol, p, a {
   font-family: var(--main-font);
   font-size: 15px;
+  font-weight: 550 !important;
   line-height: 22px;
 }
 
@@ -129,7 +133,14 @@ a {
   margin-bottom: 10px;
 }
 
+/* Codes */
 
+code {
+  font-family: var(--code-font) !important; 
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  color: #7c0000 !important;
+}
 
 
 
@@ -137,9 +148,11 @@ a {
 
 .jp-RenderedText, .jp-OutputArea-output, .cm-editor.cm-s-jupyter, .jp-RenderedText.jp-OutputArea-output, .jp-OutputPrompt.jp-OutputArea-prompt, .jp-Cell-outputWrapper, .jp-OutputArea-child {
   font-family: var(--code-font);
+  font-weight: medium !important;
   font-size: 13px !important;
   line-height: 18px !important;
 }
+
 
 .highlight.hl-ipython3 {
   overflow-x: hidden;
@@ -8271,7 +8284,7 @@ Average trading volume (trailing 12 months) for APPLE: 27007968 shares.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>A widely employed technical analysis tool, the moving average (MA) effectively diminishes price volatility by filtering out random fluctuations.</p>
+<p>Moving average (MA) is a widely metric used to effectively diminishes price volatility by filtering out random fluctuations.</p>
 </div>
 </div>
 </div>
@@ -8937,9 +8950,13 @@ Average trading volume (trailing 12 months) for APPLE: 27007968 shares.
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">VaR_historical</span><span class="p">(</span><span class="n">company</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Computes Value at Risk for a company's returns at 3 conventional confidence levels &amp; produce a histogram.</span>
-<span class="sd">    """</span>
+<span class="w">    </span><span class="sd">'''</span>
+<span class="sd">    Input:</span>
+<span class="sd">        &gt; company: Name of the company</span>
+<span class="sd">    Output:</span>
+<span class="sd">        &gt; Historical VaR at 3 conventional confidence levels (90%, 95%, 99%)</span>
+<span class="sd">        &gt; A histogram of the company's returns with a vertical line at 95% conf. level VaR</span>
+<span class="sd">    '''</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">]</span>
     <span class="n">current_price</span> <span class="o">=</span> <span class="n">all_close</span><span class="p">[</span><span class="n">company</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">var_historical</span> <span class="o">=</span> <span class="p">[]</span>
@@ -8949,7 +8966,10 @@ Average trading volume (trailing 12 months) for APPLE: 27007968 shares.
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Loss will not exceed:'</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">alpha</span><span class="p">:</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="n">all_returns</span><span class="p">[</span><span class="n">company</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-        <span class="n">nearest_higher</span> <span class="o">=</span> <span class="n">all_returns</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">all_returns</span><span class="p">[</span><span class="n">company</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">loss</span><span class="p">,</span> <span class="n">company</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">nearest_higher</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">all_returns</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">all_returns</span><span class="p">[</span><span class="n">company</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">loss</span><span class="p">,</span> <span class="n">company</span><span class="p">]</span>
+            <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>        
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'   *   $</span><span class="si">{</span><span class="o">-</span><span class="n">nearest_higher</span><span class="o">*</span><span class="n">current_price</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> per share (</span><span class="si">{</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1">% confidence)'</span><span class="p">)</span>
         <span class="n">var_historical</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
             <span class="s1">'Confidence'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">i</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1">%'</span><span class="p">,</span>
@@ -8960,8 +8980,10 @@ Average trading volume (trailing 12 months) for APPLE: 27007968 shares.
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mf">10.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">all_returns</span><span class="p">[</span><span class="n">company</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="n">company_colours</span><span class="p">[</span><span class="n">company</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">kde</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">perc_95</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">'#564c4d'</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">'VaR (95% confidence):</span><span class="se">\n</span><span class="s1">             </span><span class="si">{</span><span class="n">perc_95</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%'</span><span class="p">,</span> <span class="n">xy</span> <span class="o">=</span> <span class="p">(</span><span class="n">perc_95</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span> <span class="n">weight</span> <span class="o">=</span> <span class="s1">'bold'</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">'#232023'</span><span class="p">,</span>
-        <span class="n">xytext</span> <span class="o">=</span> <span class="p">(</span><span class="n">perc_95</span><span class="o">-</span><span class="mf">0.045</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">arrowprops</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span> <span class="o">=</span> <span class="s2">"-&gt;"</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">'#808080'</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">'VaR (95% confidence):</span><span class="se">\n</span><span class="s1">             </span><span class="si">{</span><span class="n">perc_95</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%'</span><span class="p">,</span>
+        <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">perc_95</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#232023'</span><span class="p">,</span>
+        <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">perc_95</span> <span class="o">-</span> <span class="mf">0.045</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-&gt;"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#808080'</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">left</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">company</span><span class="si">}</span><span class="s1"> Returns'</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">company</span><span class="si">}</span><span class="s1"> Historical Value at Risk'</span><span class="p">)</span>
@@ -9159,9 +9181,13 @@ Loss will not exceed:
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">VaR_parametric</span><span class="p">(</span><span class="n">company</span><span class="p">):</span> 
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Computes Value at Risk for a company's returns at 3 conventional confidence levels &amp; produce a histogram.</span>
-<span class="sd">    """</span>
+<span class="w">    </span><span class="sd">'''</span>
+<span class="sd">    Input:</span>
+<span class="sd">        &gt; company: Name of the company</span>
+<span class="sd">    Output:</span>
+<span class="sd">        &gt; Parametric VaR at 3 conventional confidence levels (90%, 95%, 99%)</span>
+<span class="sd">        &gt; A histogram of the company's returns with a vertical line at 95% conf. level VaR</span>
+<span class="sd">    '''</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">]</span>
     <span class="n">current_price</span> <span class="o">=</span> <span class="n">all_close</span><span class="p">[</span><span class="n">company</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">var_parametric</span> <span class="o">=</span> <span class="p">[]</span>  
@@ -9367,8 +9393,12 @@ Loss will not exceed:
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">price_montecarlo</span><span class="p">(</span><span class="n">company</span><span class="p">,</span> <span class="n">days</span><span class="p">):</span> 
 <span class="w">    </span><span class="sd">'''</span>
-<span class="sd">    Purpose: simulate the price of a stock over the course of given days</span>
-<span class="sd">    Input: company, days</span>
+<span class="sd">    Input:</span>
+<span class="sd">        &gt; company: Name of the company</span>
+<span class="sd">        &gt; days: Number of days for the simulation</span>
+
+<span class="sd">    Output:</span>
+<span class="sd">        &gt; A DataFrame showing simulated stock prices</span>
 <span class="sd">    '''</span>
     <span class="n">initial_price</span> <span class="o">=</span> <span class="n">all_close</span><span class="p">[</span><span class="n">company</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Time'</span><span class="p">,</span> <span class="s1">'Simulated price'</span><span class="p">,</span> <span class="s1">'Drift'</span><span class="p">,</span> <span class="s1">'Shock'</span><span class="p">])</span>
@@ -9382,7 +9412,10 @@ Loss will not exceed:
         <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">'Time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
         <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">'Drift'</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span> <span class="o">*</span> <span class="n">delta_t</span>
         <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">'Shock'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mean</span> <span class="o">*</span> <span class="n">delta_t</span><span class="p">,</span> <span class="n">stdev</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">delta_t</span><span class="p">))</span>
-        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">'Simulated price'</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">'Simulated price'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">'Simulated price'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">'Drift'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">results</span><span class="p">[</span><span class="s1">'Shock'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">'Simulated price'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">results</span><span class="p">[</span><span class="s1">'Simulated price'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span>
+            <span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">'Simulated price'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span>
+            <span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">'Drift'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">results</span><span class="p">[</span><span class="s1">'Shock'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">])))</span>
 
     <span class="k">return</span> <span class="n">results</span>
 
@@ -9584,6 +9617,15 @@ Loss will not exceed:
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">VaR_montecarlo</span><span class="p">(</span><span class="n">company</span><span class="p">,</span> <span class="n">days</span><span class="p">,</span> <span class="n">rep</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">'''</span>
+<span class="sd">    Input:</span>
+<span class="sd">        &gt; company: Name of the company</span>
+<span class="sd">        &gt; days: Number of days for the simulation</span>
+<span class="sd">        &gt; rep: Number of repetitions for the Monte Carlo simulation</span>
+<span class="sd">    Output:</span>
+<span class="sd">        &gt; Monte Carlo VaR at 3 conventional confidence levels (90%, 95%, 99%)</span>
+<span class="sd">        &gt; A histogram of the company's simulated losses over repetitions</span>
+<span class="sd">    '''</span>
     <span class="n">sim_results</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">current_price</span> <span class="o">=</span> <span class="n">all_close</span><span class="p">[</span><span class="s1">'AAPL'</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">initial_price</span> <span class="o">=</span> <span class="n">all_close</span><span class="p">[</span><span class="s1">'AAPL'</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
